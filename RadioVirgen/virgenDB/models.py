@@ -57,14 +57,23 @@ class Pago_con_tarjeta(models.Model):
     nombre_completo = models.CharField(max_length=40)
     predeterminado = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f'{self.numero_tarjeta}'
+
 class Paypal(models.Model):
     correo_electronico = models.CharField(max_length=40)
     predeterminado = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'{self.correo_electronico}'
 
 class Transferencia_bancaria(models.Model):
     numero_cuenta = models.CharField(max_length=20)
     nombre_cuenta = models.CharField(max_length=100)
     predeterminado = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.numero_cuenta}'
 
 class Usuario(models.Model):
     nick = models.CharField(unique=True, max_length=100)
@@ -86,6 +95,9 @@ class Metodos_pago(models.Model):
     pago_con_tarjeta = models.ForeignKey(Pago_con_tarjeta, on_delete=models.CASCADE, null=True)
     paypal = models.ForeignKey(Paypal, on_delete=models.CASCADE, null=True)
     transferencia_bancaria = models.ForeignKey(Transferencia_bancaria, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return f'Usuario: {self.id_usuario.__str__()} - Pago con tarjeta: {self.pago_con_tarjeta.__str__()} - PayPal: {self.paypal.__str__()} - Transferencia bancaria: {self.transferencia_bancaria.__str__()}'
 
 class Reproducciones(models.Model):
     idUsuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
