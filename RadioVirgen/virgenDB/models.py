@@ -51,6 +51,25 @@ class Familia(models.Model):
     max_miembros = models.IntegerField(default=4)
     def __str__(self):
         return f'ID: {self.id.__str__()} - {self.nombre}'
+class Pago_con_tarjeta(models.Model):
+    numero_tarjeta = models.IntegerField()
+    cvc = models.IntegerField(default=3)
+    nombre_completo = models.CharField(max_length=40)
+    predeterminado = models.BooleanField(default=False)
+
+class Paypal(models.Model):
+    correo_electronico = models.CharField(max_length=40)
+    predeterminado = models.BooleanField(default=False)
+
+class Transferencia_bancaria(models.Model):
+    numero_cuenta = models.CharField(max_length=20)
+    nombre_cuenta = models.CharField(max_length=100)
+    predeterminado = models.BooleanField(default=False)
+
+class Metodos_pago(models.Model):
+    pago_con_tarjeta = models.ForeignKey(Pago_con_tarjeta, on_delete=models.CASCADE, null=True)
+    paypal = models.ForeignKey(Paypal, on_delete=models.CASCADE, null=True)
+    transferencia_bancaria = models.ForeignKey(Transferencia_bancaria, on_delete=models.CASCADE, null=True)
 
 class Usuario(models.Model):
     nick = models.CharField(unique=True, max_length=100)
@@ -65,6 +84,7 @@ class Usuario(models.Model):
     familia = models.ForeignKey(Familia, on_delete=models.CASCADE, null=True, blank=True)
     podcast_pendientes = models.ManyToManyField(Podcast, related_name="fk_user_podcast_pend", blank=True)
     me_gusta_podcast = models.ManyToManyField(Podcast, related_name="fk_user_podcast_liked", blank=True)
+    metodos_pago = models.ManyToManyField(Metodos_pago, related_name="fk_user_metodo_pago", blank=True)
     def __str__(self):
         return f'ID: {self.id.__str__()} - {self.nombre}'
 
