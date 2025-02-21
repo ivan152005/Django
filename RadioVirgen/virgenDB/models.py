@@ -58,14 +58,14 @@ class Pago_con_tarjeta(models.Model):
     predeterminado = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.numero_tarjeta}'
+        return f'{self.numero_tarjeta} {self.predeterminado}'
 
 class Paypal(models.Model):
     correo_electronico = models.CharField(max_length=40)
     predeterminado = models.BooleanField(default=True)
 
     def __str__(self):
-        return f'{self.correo_electronico}'
+        return f'{self.correo_electronico} {self.predeterminado}'
 
 class Transferencia_bancaria(models.Model):
     numero_cuenta = models.CharField(max_length=20)
@@ -73,7 +73,7 @@ class Transferencia_bancaria(models.Model):
     predeterminado = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.numero_cuenta}'
+        return f'{self.numero_cuenta} {self.predeterminado}'
 
 class Usuario(models.Model):
     nick = models.CharField(unique=True, max_length=100)

@@ -9,7 +9,7 @@ class Command(BaseCommand):
         parser.add_argument(
             'id',
             type=int,
-            help='Nick del usuario al que se le añadirá el podcast pendiente'
+            help='Id del usuario'
         )
 
 
